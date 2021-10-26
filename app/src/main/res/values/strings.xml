@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">KotlinTest</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Укажи простые числа</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="developers">Разработчики</string>
+    <string name="help">Помощь</string>
+    <string name="simple_number">Простое число — натуральное (целое положительное) число, имеющее ровно два различных натуральных делителя — единицу и самого себя.</string>
+
+    <string name="answer_right">Правильный ответ!</string>
+    <string name="answer_right_help_used">Правильный ответ, но в следующий раз попробуйте ответить без подсказки!</string>
+    <string name="answer_wrong">Неправильный ответ!</string>
+    <string name="answer_given">Правильный ответ уже был дан!</string>
+
+    <string name="q_simple">Укажите простое число</string>
+    <string name="q_negative">Укажите отрицательное число</string>
+    <string name="q_even">Укажите четное число</string>
+    <string name="q_max">Укажите максимальное число</string>
+
+    <string name="q_simple_help">Укажите простое число помощь</string>
+    <string name="q_negative_help">Укажите отрицательное число помощь</string>
+    <string name="q_even_help">Укажите четное число помощь</string>
+    <string name="q_max_help">Укажите максимальное число помощь</string>
+    <string name="title_activity_help">HelpActivity</string>
+</resources>
