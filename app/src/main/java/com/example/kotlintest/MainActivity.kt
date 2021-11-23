@@ -2,6 +2,8 @@ package com.example.kotlintest
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
@@ -64,19 +66,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureHelpButtons() {
         // вместо val button = findViewById<Button>(R.id.button_help)
-        binding.content.buttonHelp // получаем элемент View через kotlin bindings
-            .setOnClickListener {
-                startActivityForResult(
-                    Intent(this, HelpActivity::class.java).apply {
-                        putExtra(HelpActivity.extraQuestionIdxKey, currentQuestionIndex)
-                    }, 0
-                )
-            }
+        var button = binding.content.buttonHelp // получаем элемент View через kotlin bindings
+        button.setOnClickListener {
+            throw CustomException("Кастомное исключение")
+            startActivityForResult(
+                Intent(this, HelpActivity::class.java).apply {
+                    putExtra(HelpActivity.extraQuestionIdxKey, currentQuestionIndex)
+                }, 0
+            )
+        }
     };
 
     private fun updateUi() {
         val question = questions[currentQuestionIndex];
         questionTextView.setText(question.textId)
+
+        Log.e("CurrentQuestionIndex", currentQuestionIndex.toString())
 
         val nums = (question.other + listOf(question.rightAnswer)).shuffled()
         nums.forEachIndexed { idx, it ->
@@ -115,8 +120,14 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState.apply {
             putInt(currentQuestionIndexKey, currentQuestionIndex)
-            putIntegerArrayList(questionsIsAnsweredKey, ArrayList(questions.map { if (it.isAnswerGiven) 1 else 0 }))
-            putIntegerArrayList(questionsIsHelpUsedKey, ArrayList(questions.map { if (it.isHelpUsed) 1 else 0 }))
+            putIntegerArrayList(
+                questionsIsAnsweredKey,
+                ArrayList(questions.map { if (it.isAnswerGiven) 1 else 0 })
+            )
+            putIntegerArrayList(
+                questionsIsHelpUsedKey,
+                ArrayList(questions.map { if (it.isHelpUsed) 1 else 0 })
+            )
         })
     }
 
@@ -128,8 +139,7 @@ class MainActivity : AppCompatActivity() {
             val answerGiven = getIntegerArrayList(questionsIsAnsweredKey)
             val helpUsed = getIntegerArrayList(questionsIsHelpUsedKey)
 
-            questions.forEachIndexed {
-                idx, it ->
+            questions.forEachIndexed { idx, it ->
                 it.isAnswerGiven = answerGiven?.get(idx) == 1
                 it.isHelpUsed = helpUsed?.get(idx) == 1
             }
@@ -137,4 +147,9 @@ class MainActivity : AppCompatActivity() {
 
         updateUi()
     }
+}
+
+class CustomException(message: String? = null, cause: Throwable? = null) :
+    Exception(message, cause) {
+    constructor(cause: Throwable) : this(null, cause)
 }
